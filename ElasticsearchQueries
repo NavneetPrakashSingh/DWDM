@@ -1,0 +1,36 @@
+Bulk index query : curl -u admin:BAZHTLDKOQSWOTFM -H "Content-Type:application/x-ndjson" -X POST "https://portal-ssl50-37.bmix-dal-yp-84784341-8295-4791-ab69-853ad7d5dd46.4264710258.composedb.com:58391/agency/agencyData/_bulk?pretty&refresh" --data-binary @/home/hp/Desktop/JSONFiles/agency.json
+
+get all tables : curl -u admin:BAZHTLDKOQSWOTFM "https://portal-ssl50-37.bmix-dal-yp-84784341-8295-4791-ab69-853ad7d5dd46.4264710258.composedb.com:58391/_cat/indices?v"	
+
+Search query : curl -u admin:BAZHTLDKOQSWOTFM -H "Content-Type:application/json" -X GET "https://portal-ssl50-37.bmix-dal-yp-84784341-8295-4791-ab69-853ad7d5dd46.4264710258.composedb.com:58391/agency/agencyData/_search?pretty" --data-binary '{"query":{"match_phrase" :{"agency_id":"Halifax"}}}'
+
+Group by query : curl -u admin:BAZHTLDKOQSWOTFM -H "Content-Type:application/json" -X GET "https://portal-ssl50-37.bmix-dal-yp-84784341-8295-4791-ab69-853ad7d5dd46.4264710258.composedb.com:58391/test/_search?pretty" --data-binary '{"aggs": {"route_id": {"value_count": {"field": "line_id"}}}}'
+
+first query : curl -u admin:BAZHTLDKOQSWOTFM -H "Content-Type:application/json" -X GET "https://portal-ssl50-37.bmix-dal-yp-84784341-8295-4791-ab69-853ad7d5dd46.4264710258.composedb.com:58391/stoptime/_search?pretty" --data-binary '{"query":{"match_phrase" :{"stop_id":"7605"}},"_source":["stop_id","trip_id"]}'
+
+curl -u admin:BAZHTLDKOQSWOTFM -H "Content-Type:application/json" -X GET "https://portal-ssl50-37.bmix-dal-yp-84784341-8295-4791-ab69-853ad7d5dd46.4264710258.composedb.com:58391/stoptime/_search?pretty" --data-binary '{"query":{"match_phrase" :{"trip_id":"6528040-2012_08A-1208BRsa-Saturday-01"}},"_source":["stop_id","trip_headsign"]}'
+
+second query : curl -u admin:BAZHTLDKOQSWOTFM -H "Content-Type:application/json" -X GET "https://portal-ssl50-37.bmix-dal-yp-84784341-8295-4791-ab69-853ad7d5dd46.4264710258.composedb.com:58391/trips/tripsData/_search?pretty" --data-binary '{"size":0,"aggs": {"routes-aggs": {"terms": {"field": "route_id.keyword"}}}}'
+
+third query:
+
+
+groupby query
+"size": 0,
+  "aggs": {"group_by_state": {"terms": {"field": "state.keyword"}}}
+curl -u admin:BAZHTLDKOQSWOTFM -H "Content-Type:application/json" -X GET "https://portal-ssl50-37.bmix-dal-yp-84784341-8295-4791-ab69-853ad7d5dd46.4264710258.composedb.com:58391/trips/_search?pretty" --data-binary '{"query":"aggs": {"stop_id": {"avg": {"field": "stop_id"}}}}'
+
+
+----------
+
+Bulk index query : curl -u admin:<password> -H "Content-Type:application/x-ndjson" -X POST "<url>" --data-binary @<desktop path>
+
+search : curl -u admin:<password> -H "Content-Type:application/json" -X GET "https://portal-ssl50-37.bmix-dal-yp-84784341-8295-4791-ab69-853ad7d5dd46.4264710258.composedb.com:58391/stoptime/_search?pretty" --data-binary '{"query":{"match_phrase" :{"stop_id":"7605"}},"_source":["stop_id","trip_id"]}'
+-----------
+Bulk sample example : curl -u admin:BAZHTLDKOQSWOTFM -H "Content-Type:application/x-ndjson" -X POST "https://portal-ssl50-37.bmix-dal-yp-84784341-8295-4791-ab69-853ad7d5dd46.4264710258.composedb.com:58391/testexample/testExampleData/_bulk?pretty&refresh" --data-binary @/home/hp/Desktop/JSONFiles/testExample.json
+
+----------
+delete index : curl -u admin:BAZHTLDKOQSWOTFM GET delete /testexample
+
+group by : curl -u admin:<password> -H "Content-Type:application/json" -X GET "<url>" --data-binary '{"aggs": {"<name of the field represented>": {"value_count": {"field": "<name of the field>"}}}}'
+
